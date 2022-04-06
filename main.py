@@ -15,14 +15,14 @@ def is_image(fn):
 
 
 # go through all files in desired folder ###############################################################################
-folders = ['./animals/lion mammal/', './animals/leopard mammal/', './animals/puma mammal/']
+folders = ['./Traffic Signs/10 speed limit sign/', './Traffic Signs/15 speed limit sign/', './Traffic Signs/25 speed limit sign/', './Traffic Signs/30 speed limit sign/', './Traffic Signs/35 speed limit sign/', './Traffic Signs/45 speed limit sign/', './Traffic Signs/50 speed limit sign/', './Traffic Signs/55 speed limit sign/', './Traffic Signs/60 speed limit sign/', './Traffic Signs/65 speed limit sign/', './Traffic Signs/70 speed limit sign/', './Traffic Signs/75 speed limit sign/', './Traffic Signs/Railroad sign/', './Traffic Signs/Stop sign/', './Traffic Signs/Slow sign/', './Traffic Signs/Yield sign/', './Traffic Signs/School zone sign/']
 for fd in folders:
     for filename in os.listdir(fd):
         if not is_image(fd + filename):  # check if file is actually an image file
             os.remove(os.path.join(fd, filename))  # if the file is not valid, remove it
 
 img_height, img_width = [256, 256]
-batch_size = 72
+batch_size = 100
 # POSSIBILY LARGER BATCH ###############################################################################################
 
 # CHANGE ###############################################################################################################
@@ -50,26 +50,25 @@ train_ds = train_ds.cache().prefetch(buffer_size=AUTOTUNE)
 val_ds = val_ds.cache().prefetch(buffer_size=AUTOTUNE)
 
 # CHANGE ###############################################################################################################
-num_classes = 4
+num_classes = 17
 
 model = tf.keras.Sequential([
     tf.keras.layers.Rescaling(1. / 255),
-    tf.keras.layers.Conv2D(72, 3, activation='relu'),
+    tf.keras.layers.Conv2D(100, 3, activation='relu'),
     tf.keras.layers.MaxPooling2D(),
     tf.keras.layers.Dropout(.2),
-    tf.keras.layers.Conv2D(56, 3, activation='relu'),
+    tf.keras.layers.Conv2D(84, 3, activation='relu'),
     tf.keras.layers.MaxPooling2D(),
     tf.keras.layers.Dropout(.2),
-    tf.keras.layers.Conv2D(40, 3, activation='relu'),
+    tf.keras.layers.Conv2D(67, 3, activation='relu'),
     tf.keras.layers.MaxPooling2D(),
     tf.keras.layers.Dropout(.2),
-    tf.keras.layers.Conv2D(24, 3, activation='relu'),
+    tf.keras.layers.Conv2D(42, 3, activation='relu'),
     tf.keras.layers.MaxPooling2D(),
     tf.keras.layers.Dropout(.2),
-    tf.keras.layers.Conv2D(10, 3, activation='relu'),
+    tf.keras.layers.Conv2D(29, 3, activation='relu'),
     tf.keras.layers.MaxPooling2D(),
-    tf.keras.layers.Dropout(.2),
-    tf.keras.layers.Conv2D(3, 3, activation='relu'),
+    tf.keras.layers.Conv2D(17, 3, activation='relu'),
     tf.keras.layers.MaxPooling2D(),
     tf.keras.layers.Flatten(),
     tf.keras.layers.Dense(128, activation='relu'),
@@ -78,7 +77,7 @@ model = tf.keras.Sequential([
 
 model.compile(optimizer='adam', loss=tf.losses.SparseCategoricalCrossentropy(from_logits=True), metrics=['accuracy'])
 history = model.fit(train_ds, validation_data=val_ds,
-                    epochs=300)  # EPOCHS #############################################
+                    epochs=100)  # EPOCHS #############################################
 
 y_vloss = history.history['val_loss']
 y_loss = history.history['loss']
