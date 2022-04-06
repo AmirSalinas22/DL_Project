@@ -6,12 +6,13 @@ from selenium.webdriver.common.keys import Keys
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 
-query = 'School zone sign'
-limit = 2
+folder = 'Yield sign'
+query = 'Yield traffic sign'
+limit = 400
 
 
 options = Options()
-options.add_argument("start-maximized") # OPENS WEB
+options.add_argument("window-size=800,600") # OPENS WEB
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 driver.get('https://www.google.com/')
 
@@ -39,7 +40,7 @@ driver.find_element(By.XPATH, '//*[@id="hdtb-msb"]/div[1]/div/div[2]/a').click()
 for i in range(1, limit):
     try:
         driver.find_element(By.XPATH, '//*[@id="islrg"]/div[1]/div[' + str(i) + ']/a[1]/div[1]/img').screenshot(
-            'Traffic Signs/School zone sign/ ('+ str(query) + str(i)+').png')
+            'Traffic Signs/'+str(folder)+'/ ('+ str(query) + str(i)+').png')
     except:
         pass
 
