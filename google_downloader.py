@@ -7,7 +7,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 import time
 
 query = 'School zone sign'
-limit = 200
+limit = 2
 
 
 options = Options()
@@ -36,11 +36,10 @@ driver.find_element(By.XPATH, '//*[@id="hdtb-msb"]/div[1]/div/div[2]/a').click()
 #    if new_height == last_height:
 #        break
 #    last_height = new_height
-
 for i in range(1, limit):
     try:
         driver.find_element(By.XPATH, '//*[@id="islrg"]/div[1]/div[' + str(i) + ']/a[1]/div[1]/img').screenshot(
-            '..\\Traffic Signs\\School zone sign\\'+ str(query) + str(i)+ '.png')
+            'Traffic Signs/School zone sign/ ('+ str(query) + str(i)+').png')
     except:
         pass
 
