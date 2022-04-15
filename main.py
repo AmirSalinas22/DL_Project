@@ -9,7 +9,7 @@ def is_image(fn):
     data = open(fn, 'rb').read(10)
     # check if file is JPG or JPEG
     if data[:3] == b'\xff\xd8\xff':
-        print(fn + " is: JPG/JPEG.")
+        #print(fn + " is: JPG/JPEG.")
         return True
     return False
 
